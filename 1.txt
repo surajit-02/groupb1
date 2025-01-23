@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+
+struct Node* createLinkedList(int N) {
+    struct Node* head = NULL;
+    struct Node* temp = NULL;
+
+    for (int i = 1; i <= N; i++) {
+        struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = i;
+        newNode->next = NULL;
+
+        if (head == NULL) {
+            head = newNode;
+        } else {
+            temp = head;
+            while (temp->next != NULL) {
+                temp = temp->next;
+            }
+            temp->next = newNode;
+        }
+    }
+
+    return head;
+}
+
+
+void sumEvenOdd(struct Node* head) {
+    int evenSum = 0, oddSum = 0;
+
+    struct Node* temp = head;
+    while (temp != NULL) {
+        if (temp->data % 2 == 0) {
+            evenSum += temp->data;
+        } else {
+            oddSum += temp->data;
+        }
+        temp = temp->next;
+    }
+
+    printf("Sum of even numbers: %d\n", evenSum);
+    printf("Sum of odd numbers: %d\n", oddSum);
+}
+
+
+void displayList(struct Node* head) {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    int N;
+
+    
+    printf("Enter the value of N (N >= 20): ");
+    scanf("%d", &N);
+
+    
+    if (N < 20) {
+        printf("N should be >= 20.\n");
+        return 1;
+    }
+
+    
+    struct Node* head = createLinkedList(N);
+
+    
+    printf("Linked List: ");
+    displayList(head);
+
+    
+    sumEvenOdd(head);
+
+    return 0;
+}
